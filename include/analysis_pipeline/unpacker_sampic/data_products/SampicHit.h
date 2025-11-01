@@ -12,6 +12,7 @@ constexpr int MAX_SAMPIC_SAMPLES = 64;
 /**
  * @brief Binary structure matching SAMPIC HitStruct header
  * This is the data written to AD banks (header + CorrectedDataSamples + scalars)
+ * NOTE: SAMPIC library writes packed data to MIDAS banks (no padding)
  */
 #pragma pack(push, 1)
 struct SampicHitHeader {
