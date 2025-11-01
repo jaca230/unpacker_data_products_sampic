@@ -1,49 +1,55 @@
 #include "analysis_pipeline/unpacker_sampic/data_products/SampicEvent.h"
-#include "analysis_pipeline/unpacker_sampic/data_products/SampicWaveform.h"
+#include <iostream>
 
-#include <unordered_map>
-
+ClassImp(dataProducts::SampicHitData);
 ClassImp(dataProducts::SampicEvent);
 
 using namespace dataProducts;
 
-SampicEvent::SampicEvent()
-    : DataProduct()
-    , header()
-    , packets()
-    , footer()
-{}
+void SampicHitData::Print(Option_t* option) const {
+    std::cout << "SampicHitData:\n";
+    std::cout << "  FE Board: " << fe_board_index << ", Channel: " << channel << "\n";
+    std::cout << "  Hit Number: " << hit_number << ", SAMPIC: " << sampic_index << "\n";
+    std::cout << "  Waveform samples: " << corrected_waveform.size() << "\n";
+    std::cout << "  Amplitude: " << amplitude << ", Baseline: " << baseline << "\n";
+    std::cout << "  Time instant: " << time_instant << " ns\n";
 
-SampicEvent::~SampicEvent() {}
-
-void SampicEvent::BuildWaveformsFromPackets() {
-    waveforms.Clear();
-
-    // Map channel -> vector of pointers to packets (no copies)
-    std::unordered_map<uint64_t, std::vector<const SampicPacket*>> channel_to_packet_ptrs;
-
-    for (const auto& pkt : packets.packets) {
-        channel_to_packet_ptrs[pkt.channel].push_back(&pkt);
+    if (std::string(option) == "full" && !corrected_waveform.size()) {
+        std::cout << "  First 10 samples: ";
+        for (size_t i = 0; i < std::min(size_t(10), corrected_waveform.size()); ++i) {
+            std::cout << corrected_waveform[i] << " ";
+        }
+        std::cout << "\n";
     }
+}
 
-    // Build waveforms per channel
-    for (auto& [channel, pkt_ptrs] : channel_to_packet_ptrs) {
-        SampicWaveform wf;
-        wf.buildFromPackets(pkt_ptrs);
-        waveforms.AddWaveform(std::move(wf));
-    }
+void SampicHitData::Show() const {
+    Print();
 }
 
 void SampicEvent::Print(Option_t* option) const {
     std::cout << "SampicEvent Summary:\n";
-    std::cout << "  Event Index: " << header.event_index << "\n";
-    std::cout << "  Trigger time: " << header.event_reference_time << "\n";
-    std::cout << "  Number of packets: " << packets.packets.size() << "\n";
-    std::cout << "  Number of waveforms: " << waveforms.waveforms.size() << "\n";
+    std::cout << "  Number of hits: " << hits.size() << "\n";
 
-    // Optionally add more verbose output if requested
+    if (event_total_time_us > 0) {
+        std::cout << "  Event timing (us): prepare=" << event_prepare_time_us
+                  << ", read=" << event_read_time_us
+                  << ", decode=" << event_decode_time_us
+                  << ", total=" << event_total_time_us << "\n";
+    }
+
+    if (collector_total_time_us > 0) {
+        std::cout << "  Collector timing (us): wait=" << collector_wait_time_us
+                  << ", group=" << collector_group_time_us
+                  << ", finalize=" << collector_finalize_time_us
+                  << ", total=" << collector_total_time_us << "\n";
+    }
+
     if (std::string(option) == "full") {
-        std::cout << "  (Full dump not implemented yet)\n";
+        for (size_t i = 0; i < hits.size(); ++i) {
+            std::cout << "\n  Hit " << i << ":\n";
+            hits[i].Print();
+        }
     }
 }
 
