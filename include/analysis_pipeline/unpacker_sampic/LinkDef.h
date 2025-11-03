@@ -11,6 +11,7 @@
 // TObject classes
 #pragma link C++ class dataProducts::SampicHitData+;
 #pragma link C++ class dataProducts::SampicEvent+;
+#pragma link C++ class dataProducts::SampicTiming+;
 
 // STL containers
 #pragma link C++ class std::vector<float>+;

@@ -64,19 +64,6 @@ public:
     // Collection of hits in this event
     std::vector<SampicHitData> hits;
 
-    // Event-level timing information (optional, from AT banks)
-    double event_prepare_time_us = 0.0;
-    double event_read_time_us = 0.0;
-    double event_decode_time_us = 0.0;
-    double event_total_time_us = 0.0;
-
-    // Collector-level timing information (optional, from AC banks)
-    double collector_wait_time_us = 0.0;
-    double collector_group_time_us = 0.0;
-    double collector_finalize_time_us = 0.0;
-    double collector_bank_creation_time_us = 0.0;
-    double collector_total_time_us = 0.0;
-
     void Print(Option_t* option = "") const override;
     void Show() const;
 

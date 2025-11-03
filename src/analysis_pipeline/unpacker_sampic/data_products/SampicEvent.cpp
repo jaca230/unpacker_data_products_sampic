@@ -31,20 +31,6 @@ void SampicEvent::Print(Option_t* option) const {
     std::cout << "SampicEvent Summary:\n";
     std::cout << "  Number of hits: " << hits.size() << "\n";
 
-    if (event_total_time_us > 0) {
-        std::cout << "  Event timing (us): prepare=" << event_prepare_time_us
-                  << ", read=" << event_read_time_us
-                  << ", decode=" << event_decode_time_us
-                  << ", total=" << event_total_time_us << "\n";
-    }
-
-    if (collector_total_time_us > 0) {
-        std::cout << "  Collector timing (us): wait=" << collector_wait_time_us
-                  << ", group=" << collector_group_time_us
-                  << ", finalize=" << collector_finalize_time_us
-                  << ", total=" << collector_total_time_us << "\n";
-    }
-
     if (std::string(option) == "full") {
         for (size_t i = 0; i < hits.size(); ++i) {
             std::cout << "\n  Hit " << i << ":\n";
