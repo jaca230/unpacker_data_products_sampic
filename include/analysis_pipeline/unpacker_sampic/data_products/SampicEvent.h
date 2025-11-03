@@ -5,7 +5,6 @@
 #include "analysis_pipeline/unpacker_sampic/data_products/SampicHit.h"
 #include <TObject.h>
 #include <vector>
-#include <iostream>
 
 namespace dataProducts {
 

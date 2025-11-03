@@ -3,7 +3,6 @@
 
 #include "analysis_pipeline/unpacker_core/data_products/DataProduct.h"
 #include <TObject.h>
-#include <iostream>
 #include <cstdint>
 
 namespace dataProducts {
