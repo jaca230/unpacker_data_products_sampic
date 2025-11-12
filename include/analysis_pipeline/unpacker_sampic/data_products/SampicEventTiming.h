@@ -25,6 +25,8 @@ struct SampicEventTimingRecord {
     uint32_t sp_read_us_max;       // Max SAMPIC read time
     uint32_t sp_decode_us_max;     // Max SAMPIC decode time
     uint32_t sp_total_us_max;      // Max SAMPIC total time
+    uint32_t sp_acq_retry_max;     // Max acquisition retries
+    uint32_t sp_acq_retry_sum;     // Sum of acquisition retries
 };
 #pragma pack(pop)
 
@@ -56,10 +58,14 @@ public:
     uint32_t sp_decode_us_max = 0;
     uint32_t sp_total_us_max = 0;
 
+    // Acquisition retry stats
+    uint32_t sp_acq_retry_max = 0;
+    uint32_t sp_acq_retry_sum = 0;
+
     void Print(Option_t* option = "") const override;
     void Show() const;
 
-    ClassDefOverride(SampicEventTiming, 1)
+    ClassDefOverride(SampicEventTiming, 2)
 };
 
 } // namespace dataProducts
