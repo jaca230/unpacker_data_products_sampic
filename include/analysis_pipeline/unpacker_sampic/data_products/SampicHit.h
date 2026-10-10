@@ -11,7 +11,7 @@ constexpr int MAX_SAMPIC_SAMPLES = 64;
 
 /**
  * @brief Binary structure matching SAMPIC HitStruct header
- * This is the data written to AD banks (header + CorrectedDataSamples + scalars)
+ * This is the data written to SD banks (header + CorrectedDataSamples + scalars)
  * NOTE: SAMPIC library writes packed data to MIDAS banks (no padding)
  */
 #pragma pack(push, 1)
@@ -47,6 +47,9 @@ struct SampicHitScalars {
     double first_cell_timestamp;  // ns
 };
 #pragma pack(pop)
+
+static_assert(sizeof(SampicHitHeader) == 44, "Unexpected SD hit header size");
+static_assert(sizeof(SampicHitScalars) == 44, "Unexpected SD hit scalar size");
 
 } // namespace dataProducts
 

@@ -8,7 +8,7 @@
 namespace dataProducts {
 
 /**
- * @brief Binary format for collector timing banks (e.g., AC banks)
+ * @brief Binary format for collector timing banks (SC banks)
  *
  * Structure written by FrontendEventBankCollectorTiming in SAMPIC DAQ
  */
@@ -24,10 +24,12 @@ struct SampicCollectorTimingRecord {
 };
 #pragma pack(pop)
 
+static_assert(sizeof(SampicCollectorTimingRecord) == 32, "Unexpected SC record size");
+
 /**
  * @brief Collector-level timing data for SAMPIC processing
  *
- * Contains timing information from the collector-level processing (AC banks).
+ * Contains timing information from the collector-level processing (SC banks).
  * This is diagnostic data separate from physics data.
  * Note: AC banks may not be present in every event.
  */

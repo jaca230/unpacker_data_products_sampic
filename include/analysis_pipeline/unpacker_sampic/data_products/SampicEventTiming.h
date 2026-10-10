@@ -8,7 +8,7 @@
 namespace dataProducts {
 
 /**
- * @brief Binary format for event timing banks (e.g., AT banks)
+ * @brief Binary format for event timing banks (ST banks)
  *
  * Structure written by FrontendEventBankEventTiming in SAMPIC DAQ
  */
@@ -29,6 +29,8 @@ struct SampicEventTimingRecord {
     uint32_t sp_acq_retry_sum;     // Sum of acquisition retries
 };
 #pragma pack(pop)
+
+static_assert(sizeof(SampicEventTimingRecord) == 56, "Unexpected ST record size");
 
 /**
  * @brief Event-level timing data for SAMPIC processing
