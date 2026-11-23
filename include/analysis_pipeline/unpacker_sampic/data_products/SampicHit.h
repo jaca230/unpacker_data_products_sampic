@@ -1,56 +1,32 @@
-#ifndef SAMPICHIT_HH
-#define SAMPICHIT_HH
-
+#pragma once
 #include <cstdint>
-#include <TObject.h>
 
 namespace dataProducts {
-
-// Maximum number of samples in SAMPIC waveform
 constexpr int MAX_SAMPIC_SAMPLES = 64;
-
-/**
- * @brief Binary structure matching SAMPIC HitStruct header
- * This is the data written to SD banks (header + CorrectedDataSamples + scalars)
- * NOTE: SAMPIC library writes packed data to MIDAS banks (no padding)
- */
+// Current compact SD wire format, little endian. Not the vendor HitStruct.
 #pragma pack(push, 1)
-struct SampicHitHeader {
-    int32_t fe_board_index;
-    int32_t channel;  // 0 to 63
-    int32_t hit_number;
-    int32_t sampic_index;
-    int32_t channel_index;
-    int32_t data_size;  // Number of samples
-
-    // Correction flags
-    int32_t inl_corrected;
-    int32_t adc_corrected;
-    int32_t residual_pedestal_corrected;
-
-    // Cell information
-    int32_t cell_info;
-    int32_t first_cell_physical_index;
+struct SampicHitBankHeader {
+    char magic[4]; // SDC1
+    uint16_t version;
+    uint16_t record_size;
+    uint32_t hit_count;
 };
-
-struct SampicHitScalars {
-    int32_t raw_tot_value;  // ADC Count
-    float tot_value;  // ns
-
-    float amplitude;
-    float baseline;
-    float peak;
-
-    float time_index;
-    double time_instant;  // ns
-    float time_amplitude;
-    double first_cell_timestamp;  // ns
+struct SampicHitRecord {
+    uint8_t fe_board_index;
+    uint8_t channel;
+    int32_t hit_number;
+    uint8_t sampic_index;
+    uint8_t channel_index;
+    uint8_t waveform_size;
+    uint8_t flags;
+    uint8_t cell_info;
+    uint8_t first_cell_physical_index;
+    int16_t waveform[64];
+    uint16_t raw_tot_value;
+    float tot_value;
+    double first_cell_timestamp;
 };
 #pragma pack(pop)
-
-static_assert(sizeof(SampicHitHeader) == 44, "Unexpected SD hit header size");
-static_assert(sizeof(SampicHitScalars) == 44, "Unexpected SD hit scalar size");
-
+static_assert(sizeof(SampicHitBankHeader) == 12);
+static_assert(sizeof(SampicHitRecord) == 154);
 } // namespace dataProducts
-
-#endif // SAMPICHIT_HH

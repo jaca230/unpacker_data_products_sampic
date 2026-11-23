@@ -5,8 +5,8 @@
 #pragma link off all functions;
 
 // Binary data structures
-#pragma link C++ struct dataProducts::SampicHitHeader+;
-#pragma link C++ struct dataProducts::SampicHitScalars+;
+#pragma link C++ struct dataProducts::SampicHitBankHeader+;
+#pragma link C++ struct dataProducts::SampicHitRecord+;
 #pragma link C++ struct dataProducts::SampicEventTimingRecord+;
 #pragma link C++ struct dataProducts::SampicCollectorTimingRecord+;
 #pragma link C++ struct dataProducts::SampicHitMetadataBankHeader+;
@@ -31,5 +31,13 @@
 #pragma link C++ class std::vector<dataProducts::SampicHitData>+;
 #pragma link C++ class std::vector<dataProducts::SampicHitMetadataData>+;
 #pragma link C++ class std::vector<dataProducts::SampicTriggerRecordData>+;
+
+#pragma link C++ struct dataProducts::SampicReadoutTickRecord+;
+#pragma link C++ class dataProducts::SampicReadoutTick+;
+
+#pragma link C++ struct dataProducts::SampicTimeBinRecord+;
+#pragma link C++ class dataProducts::SampicTimeBin+;
+
+#pragma link C++ class std::vector<short>+;
 
 #endif
