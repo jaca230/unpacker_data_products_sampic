@@ -26,6 +26,16 @@
 #pragma link C++ class dataProducts::SampicTriggerRecordData+;
 #pragma link C++ class dataProducts::SampicTriggerRecords+;
 
+#pragma link C++ class dataProducts::SampicBuilderHit+;
+#pragma link C++ class dataProducts::SampicBuilderEvent+;
+#pragma link C++ class dataProducts::SampicBuilderTimingSummary+;
+#pragma link C++ class dataProducts::SampicBuilderCollectorCycle+;
+#pragma link C++ class dataProducts::SampicBuilderDiagnostics+;
+#pragma link C++ class dataProducts::SampicBuilderCutSummary+;
+#pragma link C++ class std::vector<dataProducts::SampicBuilderCutSummary>+;
+#pragma link C++ class std::vector<dataProducts::SampicBuilderHit>+;
+#pragma link C++ class std::vector<dataProducts::SampicBuilderTimingSummary>+;
+
 // STL containers
 #pragma link C++ class std::vector<float>+;
 #pragma link C++ class std::vector<dataProducts::SampicHitData>+;
